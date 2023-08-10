@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "95dace0b-b33c-4d7e-9f66-5fc812504a2b",
+		"name": "Dictionary",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23403135"
+	},
+	"item": [
+		{
+			"name": "Search for word",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"const query = response.filter((result) => result.word)\r",
+							"\r",
+							"const word = query[0];\r",
+							"\r",
+							"if (word) {\r",
+							"    pm.collectionVariables.set(\"WORD\", word.word);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Word found\", () => {\r",
+							"    pm.expect(query).to.be.an('array');\r",
+							"    pm.expect(word.word).to.eql(pm.collectionVariables.get(\"WORD\"))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dic_baseURL}}/car",
+					"host": [
+						"{{dic_baseURL}}"
+					],
+					"path": [
+						"car"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "dic_baseURL",
+			"value": "https://api.dictionaryapi.dev/api/v2/entries/en"
+		},
+		{
+			"key": "WORD",
+			"value": ""
+		}
+	]
+}
