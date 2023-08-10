@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "c5b19f3b-af37-4be7-bc1f-ac8b8d4ce6d3",
+		"name": "Guru",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23403135"
+	},
+	"item": [
+		{
+			"name": "List all providers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Providers found, includes data\", () => {\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response.data).to.be.an('array')\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/providers.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"providers.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all APIs for a particular provider",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"const provider = Object.keys(response.apis)[0];\r",
+							"\r",
+							"if (provider) {\r",
+							"    pm.collectionVariables.set(\"PROVIDER\", provider);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Provider found with APIs details\", () => {\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response.apis).to.be.an('object');\r",
+							"    pm.expect(response.apis).to.haveOwnProperty(pm.collectionVariables.get(\"PROVIDER\"))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/ably.net.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"ably.net.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all serviceNames for a particular provider",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Service Names found\", () => {\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response.data).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/1forge.com/services.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"1forge.com",
+						"services.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get basic metrics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Metrics are displayed\", () => {\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response.datasets).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/metrics.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"metrics.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all APIs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"All APIs are listed\", () => {\r",
+							"    pm.expect(response).to.be.an('object')\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/list.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"list.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve one version of a particular API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"API version retrieved\", () => {\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response.link).to.be.a('string');\r",
+							"    pm.expect(response.link).to.include(\"specs\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{guru_URL}}/specs/1forge.com/0.0.1.json",
+					"host": [
+						"{{guru_URL}}"
+					],
+					"path": [
+						"specs",
+						"1forge.com",
+						"0.0.1.json"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "guru_URL",
+			"value": "https://api.apis.guru/v2"
+		},
+		{
+			"key": "PROVIDER",
+			"value": ""
+		}
+	]
+}
